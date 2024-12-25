@@ -46,6 +46,7 @@ function PlanCard({
   costDescription,
 }: planCardProps) {
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    // TODO:  here if gold or platinum need to open creditCardDetailModal and pass him the setPlan function...
     setPlan((prev) => name);
   };
 

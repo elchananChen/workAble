@@ -1,5 +1,5 @@
 import styles from "./signUpForm.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // shadcn and cn
 import { cn } from "@/lib/utils";
@@ -41,7 +41,6 @@ function SignUpForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
-  const { mutate: signUpMutation, data, isPending } = useSignUp();
   const [id, setId] = useState<string | null>(null);
   const [plan, setPlan] = useState<"standard" | "gold" | "platinum" | "">("");
   const [isBusinessman, setisBusinessman] = useState<boolean | "entry">(
@@ -49,6 +48,7 @@ function SignUpForm({
   );
 
   const navigate = useNavigate();
+
   const {
     data: user,
     isLoading,
@@ -103,19 +103,13 @@ function SignUpForm({
       plan: "standard",
     },
   });
+  const { data, mutate: signUpMutation, isPending, status } = useSignUp();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       plan === "" ? (values.plan = "standard") : (values.plan = plan);
 
-      // מנסה להריץ את המוטציה
       await signUpMutation(values);
-      const id = data?.id || null;
-      setId(id);
-
-      // console.log(user);
-
-      navigate("/");
     } catch (err) {
       // כאן נבדוק אם יש שגיאה מאותו סוג (AxiosError)
       if (err instanceof AxiosError) {
@@ -127,6 +121,16 @@ function SignUpForm({
       }
     }
   }
+
+  useEffect(() => {
+    if (status === "success") {
+      console.log(data);
+
+      const id = data?.id || null;
+      setId(id);
+      navigate("/");
+    }
+  }, [status]);
 
   if (isBusinessman === "entry") {
     return (
@@ -141,7 +145,10 @@ function SignUpForm({
           </Button>
           <Button
             className="text-lg p-6"
-            onClick={() => setisBusinessman(false)}
+            onClick={() => {
+              setPlan((prev) => "standard");
+              setisBusinessman(false);
+            }}
           >
             a very importent customer 😎
           </Button>
@@ -173,6 +180,7 @@ function SignUpForm({
       </div>
     );
   }
+
   return (
     <form
       className={cn("flex flex-col gap-6", className)}

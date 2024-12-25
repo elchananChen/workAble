@@ -20,4 +20,12 @@ const userSchema = new Schema({
   savedBusinesses: [{ type: Schema.Types.ObjectId, ref: "Business" }],
 });
 
+// to enable virtuales
+userSchema.set("toObject", { virtuals: true });
+userSchema.set("toJSON", { virtuals: true });
+
+userSchema.virtual("fullName").get(function () {
+  return `${this.firstName} ${this.lastName}`;
+});
+
 export default mongoose.model("User", userSchema);

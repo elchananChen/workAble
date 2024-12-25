@@ -1,6 +1,6 @@
-import { getUserById, signUp } from "@/services/userService";
+import { signUp } from "@/services/userService";
 import { SignUpReq } from "@/types/userTypes";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 export function useSignUp() {
@@ -16,9 +16,3 @@ export function useSignUp() {
     },
   });
 }
-
-// useQuery({
-//   queryKey: ["cat", { id }],
-//   queryFn: () => getCat(id!),
-//   enabled: !!id,
-// });

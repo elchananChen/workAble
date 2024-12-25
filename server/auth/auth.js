@@ -38,13 +38,13 @@ const signIn = async (inputPassword, storedHashedPassword) => {
 };
 
 // creating jwt token
-async function creatToken(userID, jwtKey, res) {
-  const token = jwt.sign({ userID }, jwtKey, { expiresIn: "1h" });
+async function creatToken(user, jwtKey, res) {
+  const token = jwt.sign({ user }, jwtKey, { expiresIn: "12h" });
   res.cookie("jwt", token, {
     httpOnly: true,
     secure: false,
-    maxAge: 60 * 60 * 1000,
-    sameSite: "strict",
+    maxAge: 3600000 * 12,
+    sameSite: "lax",
   });
 
   return token;

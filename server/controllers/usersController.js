@@ -66,7 +66,7 @@ const logIn = async (req, res) => {
     const { email, password } = req.body;
 
     if (!password) {
-      console.log("pass");
+      // console.log("pass");
       return res
         .status(400)
         .send({ isValid: false, massege: "password require" });
@@ -79,25 +79,22 @@ const logIn = async (req, res) => {
     // console.log(hashedPassword);
 
     const isMatch = await auth.signIn(password, hashedPassword);
-    console.log(isMatch);
+    // console.log("baba", isMatch);
 
     if (isMatch === false) {
       return res
         .status(401)
         .send({ isValid: false, message: "Wrong password" });
     }
-    console.log(isMatch);
+
+    // console.log(isMatch);
 
     const id = user[0].id;
+    // console.log(id);
 
-    const token = await auth.creatToken(id, process.env.JWT_KEY, res);
+    const token = await auth.creatToken(user, process.env.JWT_KEY, res);
 
-    res.cookie("jwt", token, {
-      httpOnly: false,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 3600000 * 12,
-    });
+    // console.log(token);
 
     res.status(200).send({ isValid: true, message: "Login successfuly", id });
   } catch (error) {

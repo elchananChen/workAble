@@ -4,17 +4,8 @@ import {
   LogInRes,
   SignUpReq,
   SignUpRes,
-  User,
   UserWithoutPassword,
 } from "@/types/userTypes";
-
-const getAuthTokenFromCookie = () => {
-  const cookies = document.cookie.split("; ");
-  const tokenCookie = cookies.find((cookie) => cookie.startsWith("jwt"));
-  return tokenCookie ? tokenCookie.split("=")[1] : null;
-};
-
-// const token = getAuthTokenFromCookie();
 
 export const getUserById = async (id: string): Promise<UserWithoutPassword> => {
   const { data } = await api.get(`/user/${id}`);
@@ -22,7 +13,7 @@ export const getUserById = async (id: string): Promise<UserWithoutPassword> => {
 };
 
 export const logIn = async (inputsData: LogInReq): Promise<LogInRes> => {
-  const { data } = await api.post("/user/signIn", inputsData);
+  const { data } = await api.post("/user/logIn", inputsData);
   // console.log(data);
 
   return data;

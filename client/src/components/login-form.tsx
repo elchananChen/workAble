@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //  zod
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,12 +11,29 @@ import { z } from "zod";
 // react hook form
 import { useForm } from "react-hook-form";
 import { useLogIn } from "@/hook/useAuth";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getUserById } from "@/services/userService";
+
+// assets
+import loadingGif from "../assets/giphy.gif";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
-  const { mutate: logInMutation } = useLogIn();
+  const { data, mutate: logInMutation, status, isPending } = useLogIn();
+  const [id, setId] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
+  const { data: user } = useQuery({
+    queryKey: ["user", { id }],
+    queryFn: () => getUserById(id!),
+    enabled: !!id,
+    gcTime: 1000 * 60 * 12, // 12 hours
+  });
+  console.log(user);
 
   // * Zod schema to validate the inputs
   const formSchema = z.object({
@@ -46,7 +63,18 @@ export function LoginForm({
     console.log(values);
     const res = await logInMutation(values);
     console.log(res);
+    console.log(data);
   }
+
+  useEffect(() => {
+    if (status === "success") {
+      console.log(data);
+      const id = data?.id || null;
+      setId(id);
+      navigate("/");
+    }
+  }, [status]);
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -107,6 +135,11 @@ export function LoginForm({
             </p>
           )}
         </div>
+        {isPending && (
+          <div className="h-4 w-4">
+            <img src={loadingGif} className="h-full w-full" />
+          </div>
+        )}
         <Button type="submit" className="w-full">
           Login
         </Button>

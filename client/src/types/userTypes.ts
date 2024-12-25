@@ -14,6 +14,12 @@ export type UserWithoutId = Omit<User, "id">;
 
 export type SignUpReq = Omit<User, "id" | "savedBusinesses">;
 
+export type SignUpRes = {
+  success: boolean;
+  message: string;
+  id: string;
+};
+
 export type LogInReq = {
   email?: string;
   phone?: string;
@@ -24,10 +30,4 @@ export type LogInRes = {
   isValid: boolean;
   message: string;
   id?: string;
-};
-
-export type SignUpRes = {
-  success: boolean;
-  message: string;
-  id: string;
 };
