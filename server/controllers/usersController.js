@@ -95,6 +95,12 @@ const logIn = async (req, res) => {
     const token = await auth.creatToken(user, process.env.JWT_KEY, res);
 
     // console.log(token);
+    res.cookie("jwt", token, {
+      httpOnly: false,
+      secure: false,
+      maxAge: 3600000 * 12,
+      sameSite: "lax",
+    });
 
     res.status(200).send({ isValid: true, message: "Login successfuly", id });
   } catch (error) {
