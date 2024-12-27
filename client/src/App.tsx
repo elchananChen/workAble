@@ -1,33 +1,74 @@
-import { Route, Routes } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import AuthPage from "./pages/AuthPage.tsx";
 
-import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar.tsx";
-import { AppSidebar } from "./components/app-sidebar";
 import Contact from "./pages/Contact.tsx";
 import SignUpForm from "./components/signUpForm/signUpForm.tsx";
 import { LoginForm } from "./components/login-form.tsx";
 
+import Business from "./pages/Business.tsx";
+import Error from "./pages/Error.tsx";
+import Layout from "./pages/Layout.tsx";
+import AboutUs from "./pages/aboutUs.tsx";
+import UserBusiness from "./pages/userBusiness.tsx";
+import AddBusiness from "./pages/addBusiness.tsx";
+
 function App() {
-  return (
-    <div>
-      <SidebarProvider defaultOpen={false}>
-        <AppSidebar />
-        <SidebarTrigger></SidebarTrigger>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/contact" element={<Contact />} />
-          </Route>
-          <Route path="/auth" element={<AuthPage />}>
-            <Route path="signUp" element={<SignUpForm />} />
-            <Route path="logIn" element={<LoginForm />} />
-          </Route>
-        </Routes>
-      </SidebarProvider>
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: "/business/:id",
+          element: <Business />,
+        },
+        {
+          path: "/profile/:id",
+          element: <Profile />,
+        },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
+        {
+          path: "/about",
+          element: <AboutUs />,
+        },
+        {
+          path: "/user/businesses",
+          element: <UserBusiness />,
+        },
+        {
+          path: "/addBusiness",
+          element: <AddBusiness />,
+        },
+        {
+          path: "*",
+          element: <Error />,
+        },
+      ],
+    },
+    {
+      path: "/login",
+      element: <LoginForm />,
+    },
+    {
+      path: "/signUp",
+      element: <SignUpForm />,
+    },
+
+    {
+      path: "*",
+      element: <Error />,
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

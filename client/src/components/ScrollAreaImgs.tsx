@@ -6,17 +6,19 @@ interface Props {
 
 export default function ScrollAreaHorizontalDemo({ scrollImages }: Props) {
   return (
-    <ScrollArea className="row-start-1 row-end-3 col-start-2 w-96 whitespace-nowrap rounded-md border">
-      <div className="flex w-max space-x-4 p-4">
+    <ScrollArea className="lg:row-start-2 lg:row-end-5 lg:col-start-2 w-96 whitespace-nowrap rounded-md border">
+      <div className="grid grid-flow-col w-max gap-4 p-4">
         {scrollImages.map((object) => (
-          <figure key={object.url} className="shrink-0">
-            <div className="overflow-hidden rounded-md">
+          <figure
+            key={object.url}
+            className="shrink-0
+          h-full flex flex-col justify-between"
+          >
+            <div className="overflow-hidden rounded-md flex-grow">
               <img
                 src={object.url}
                 alt={object.description}
-                className="aspect-[3/4] h-fit w-fit object-cover"
-                width={300}
-                height={400}
+                className="aspect-[3/4] h-full w-fit object-cover"
               />
             </div>
             <figcaption className="pt-2 text-xs text-muted-foreground">

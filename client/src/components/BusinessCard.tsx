@@ -10,7 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import ScrollAreaImgs from "@/components/ScrollAreaImgs.tsx";
 import { Badge } from "./ui/badge";
 
-import { Mail, Map, MapPin, MessagesSquare } from "lucide-react";
+import { Mail, MapPin, MessagesSquare } from "lucide-react";
 
 import {
   Tooltip,
@@ -18,47 +18,42 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { useNavigate } from "react-router-dom";
 import OpenTimeTable from "./OpenTimeTable";
+import { IBusiness } from "@/pages/Business";
 
 // import ZoomableImage from "./ZoomableImage";
 
-interface Props {
-  businessName: string;
-  description: string; // short - 30 letters +-
-  whyUsArray: { title: string; description: string }[]; // 3 items, title: max 20 letters ,  description:  max 50
-  subscribersCount: number;
-  caption: string; // long - no limit ( in scroll area)
-  scrollImages: { url: string; description?: string }[]; // title: max  25 letters
-  businessEmail: string;
-  businessLocation: string;
-  services: { title: string; description: string }[]; // max -5 items
-  ownerName: string;
-  ownerImage: string;
-  aboutOwner: string;
-  businessHours: { day: string; hours: string[] }[]; // 6 - for each day
-  ownerId: string;
+export type OwnerPlan = "standard" | "gold" | "platinum";
+
+interface BusinessCardProps {
+  data: IBusiness;
 }
 
-function BusinessCard({
-  businessName,
-  description,
-  whyUsArray,
-  subscribersCount,
-  caption,
-  scrollImages,
-  services,
-  ownerImage,
-  ownerName,
-  businessEmail,
-  aboutOwner,
-  ownerId,
-  businessLocation,
-  businessHours,
-}: Props) {
+function BusinessCard({ data }: BusinessCardProps) {
+  const {
+    businessName,
+    description,
+    whyUsArray,
+    subscribersCount,
+    caption,
+    scrollImages,
+    services,
+    ownerImage,
+    ownerName,
+    businessEmail,
+    aboutOwner,
+    ownerId,
+    businessLocation,
+    businessHours,
+    ownerPlan,
+  } = data;
+
   const ownerNameArray = ownerName.split(" ");
   const avatarFallback = (ownerNameArray[1][0] + ownerName[0]).toUpperCase();
   const navigate = useNavigate();
@@ -116,7 +111,7 @@ function BusinessCard({
             </TooltipProvider>
           </div>
         </CardHeader>
-        <CardContent className="flex flex-col gap-20">
+        <CardContent className="flex flex-col gap-20 ">
           {services[2] && (
             <div>
               <div className="space-y-1">
@@ -130,11 +125,28 @@ function BusinessCard({
               <Separator className="my-4" />
               <div className="md:flex">
                 <div className="flex h-5 items-center space-x-4 text-sm ">
-                  <div>{services[0].title}</div>
+                  <Drawer>
+                    <DrawerTrigger>{services[0].title}</DrawerTrigger>
+                    <DrawerContent className="min-h-56 px-10 text-xl text-popover-foreground">
+                      {services[0].description}
+                    </DrawerContent>
+                  </Drawer>
                   <Separator orientation="vertical" />
-                  <div>{services[1].title}</div>
+                  <Drawer>
+                    <DrawerTrigger>{services[1].title}</DrawerTrigger>
+                    <DrawerContent className="min-h-56 px-10 text-xl text-popover-foreground">
+                      {services[1].description}
+                    </DrawerContent>
+                  </Drawer>
                   {services[2] && <Separator orientation="vertical" />}
-                  {services[2] && <div>{services[2].title}</div>}
+                  {services[2] && (
+                    <Drawer>
+                      <DrawerTrigger>{services[2].title}</DrawerTrigger>
+                      <DrawerContent className="min-h-56 px-10 text-xl text-popover-foreground">
+                        {services[2].description}
+                      </DrawerContent>
+                    </Drawer>
+                  )}
                 </div>
                 {services.length > 3 && (
                   <Separator className="md:hidden my-4"></Separator>
@@ -142,16 +154,28 @@ function BusinessCard({
                 {services[3] && (
                   <div className="flex h-5 items-center space-x-4 text-sm">
                     <Separator orientation="vertical" />
-                    <div>{services[3].title}</div>
+                    <Drawer>
+                      <DrawerTrigger>{services[3].title}</DrawerTrigger>
+                      <DrawerContent className="min-h-56 px-10 text-xl text-popover-foreground">
+                        {services[3].description}
+                      </DrawerContent>
+                    </Drawer>
                     {services[4] && <Separator orientation="vertical" />}
-                    {services[4] && <div>{services[4].title}</div>}
+                    {services[4] && (
+                      <Drawer>
+                        <DrawerTrigger>{services[4].title}</DrawerTrigger>
+                        <DrawerContent className="min-h-56 px-10 text-xl text-popover-foreground">
+                          {services[4].description}
+                        </DrawerContent>
+                      </Drawer>
+                    )}
                   </div>
                 )}
               </div>
             </div>
           )}
           <div className="grid gap-4 lg:grid-cols-2">
-            <ScrollArea className="col-start-1 col-end-2 bg-secondary  h-[200px] w-96 xl:w-[350px] rounded-md border p-4">
+            <ScrollArea className="lg:col-start-1 lg:col-end-2 bg-secondary lg:row-start-1 lg:row-end-3  h-[200px] w-96 xl:w-[350px] rounded-md border p-4">
               {caption}
             </ScrollArea>
             <ScrollAreaImgs scrollImages={scrollImages}></ScrollAreaImgs>

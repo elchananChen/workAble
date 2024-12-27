@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -14,24 +13,26 @@ interface Props {
 
 function OpenTimeTable({ businessHours }: Props) {
   return (
-    <Table className="w-96 xl:w-[350px] row-start-2 row-end-3">
-      <TableHeader>
-        <TableRow>
-          <TableHead>Day</TableHead>
-          <TableHead>Morning</TableHead>
-          <TableHead>Afternoon</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {businessHours.map((data) => (
-          <TableRow key={data.day}>
-            <TableCell className="font-medium">{data.day}</TableCell>
-            <TableCell>{data.hours[0] || "Unknown"}</TableCell>
-            <TableCell>{data.hours[1] || "Unknown"}</TableCell>
+    <div className="w-96 xl:w-[350px] lg:row-start-4 lg:row-end-6">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Day</TableHead>
+            <TableHead>Morning</TableHead>
+            <TableHead>Afternoon</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {businessHours.map((data) => (
+            <TableRow key={data.day}>
+              <TableCell className="font-medium">{data.day}</TableCell>
+              <TableCell>{data.hours[0] || "Unknown"}</TableCell>
+              <TableCell>{data.hours[1] || "Unknown"}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
 

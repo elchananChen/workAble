@@ -3,8 +3,10 @@ import {
   Bookmark,
   BookOpen,
   BookOpenTextIcon,
+  Factory,
   HomeIcon,
   PhoneCallIcon,
+  PlusSquare,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -21,6 +23,7 @@ import {
 import { ModeToggle } from "./mode-toggle";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const id = null;
   // This is sample data.
   const data = {
     user: {
@@ -30,7 +33,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     },
     navMain: [
       {
-        title: "your blogs",
+        title: "your activity",
         url: "#",
         icon: BookOpen,
         isActive: false,
@@ -80,14 +83,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: HomeIcon,
       },
       {
-        name: "blogs",
-        url: "/blogs",
+        name: "profile",
+        url: `/profile/:${id}`,
         icon: BookOpenTextIcon,
       },
       {
-        name: "add blog",
-        url: "/addBlog",
-        icon: BookOpenTextIcon,
+        name: "add business",
+        url: "/addBusiness",
+        icon: PlusSquare,
+      },
+      {
+        name: "your businesses",
+        url: "/user/businesses",
+        icon: Factory,
       },
       {
         name: "contect us",
@@ -96,12 +104,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
       {
         name: "log in",
-        url: "/auth/logIn",
+        url: "/logIn",
         icon: PhoneCallIcon,
       },
       {
         name: "sign up",
-        url: "/auth/signUp",
+        url: "/signUp",
         icon: PhoneCallIcon,
       },
     ],
