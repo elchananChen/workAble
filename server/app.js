@@ -3,7 +3,9 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
+// routes
 import usersRoute from "./routes/usersRoute.js";
+import businessRoute from "./routes/businessRoute.js";
 
 import cors from "cors";
 
@@ -31,6 +33,9 @@ app.get("/api/status", (req, res) => {
 
 //users routes
 app.use("/api/user", usersRoute);
+
+// business routes
+app.use("/api/business", businessRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port${PORT}`);

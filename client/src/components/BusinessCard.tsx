@@ -38,6 +38,7 @@ interface BusinessCardProps {
 function BusinessCard({ data }: BusinessCardProps) {
   const {
     businessName,
+    bunner,
     description,
     whyUsArray,
     subscribersCount,
@@ -61,7 +62,7 @@ function BusinessCard({ data }: BusinessCardProps) {
     <Card className="overflow-hidden w-full xl:w-4/5 min-h-full flex flex-col gap-10">
       <div className="h-72">
         <img
-          src="https://lh3.googleusercontent.com/TWTvINuKFx5GDe24g5TUgAWalwr2rvX5uINZr5zTrsb6U6XcOUJmdd6UFI6HOiIw2QpUS1WLL3f37VNjsWm3on7sIJHDu2fqlKUSBqDlZlnSKtRWWZo=w1024-v1-e30"
+          src={bunner}
           alt="the business Image"
           className="object-cover h-full w-full"
         />

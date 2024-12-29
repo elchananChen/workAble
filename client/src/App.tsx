@@ -10,7 +10,7 @@ import Business from "./pages/Business.tsx";
 import Error from "./pages/Error.tsx";
 import Layout from "./pages/Layout.tsx";
 import AboutUs from "./pages/aboutUs.tsx";
-import UserBusiness from "./pages/userBusiness.tsx";
+import UserBusinesses from "./pages/userBusinesses.tsx";
 import AddBusiness from "./pages/addBusiness.tsx";
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
         },
         {
           path: "/user/businesses",
-          element: <UserBusiness />,
+          element: <UserBusinesses />,
         },
         {
           path: "/addBusiness",
