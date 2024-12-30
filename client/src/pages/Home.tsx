@@ -1,10 +1,9 @@
-import AddDynamicInputFields from "@/components/dynamickInputs";
-import Business from "./Business";
+import PostCard from "@/components/postCard";
 
 function Home() {
   return (
-    <div>
-      <AddDynamicInputFields />
+    <div className="p-10">
+      <PostCard></PostCard>
     </div>
   );
 }

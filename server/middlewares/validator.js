@@ -13,6 +13,7 @@ const verifyToken = async (req, res, next) => {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader.split(" ")[1]; //authHeader &&
+    console.log(token, "token");
 
     if (!token) {
       return res.status(400).send({ message: "token miss!" });
@@ -22,8 +23,9 @@ const verifyToken = async (req, res, next) => {
       if (err) {
         return res.status(401).send({ massage: "invalid token", err });
       } else {
-        req.userID = decoded.userID;
-        console.log(decoded.userID);
+        req.userId = decoded.user[0]._id;
+        // console.log(decoded);
+        // console.log(req.userId);
 
         next();
       }

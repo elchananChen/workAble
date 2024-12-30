@@ -1,6 +1,7 @@
+import { addBusinessFormData } from "@/pages/addBusiness";
 import { addBusiness } from "@/services/businessService";
-import { businessType } from "@/types/bussinessTypes";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 // export function useBusinesses() {
@@ -17,10 +18,14 @@ import { AxiosError } from "axios";
 //   });
 // }
 
+export type addBusinessWithImagesFormData = addBusinessFormData & {
+  scrollImages: { url: string; description?: string }[];
+};
+
 export function useAddBusiness() {
-  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (inputsData: businessType) => addBusiness(inputsData),
+    mutationFn: (inputsData: addBusinessWithImagesFormData) =>
+      addBusiness(inputsData),
     //   onSuccess: () => {
     //     // Invalidate and refetch
     //     queryClient.invalidateQueries({ queryKey: ["businesses"] });

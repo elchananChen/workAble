@@ -15,7 +15,6 @@ export const getUserById = async (id: string): Promise<UserWithoutPassword> => {
 export const logIn = async (inputsData: LogInReq): Promise<LogInRes> => {
   const { data } = await api.post("/user/logIn", inputsData);
   // console.log(data);
-
   return data;
 };
 

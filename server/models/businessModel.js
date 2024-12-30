@@ -4,7 +4,7 @@ const businessSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   // category: { type: String, required: true },
-  owner: { type: Types.ObjectId, ref: "User", required: true },
+  owner: { type: Types.ObjectId, ref: "User" },
   subscribers: [{ type: Types.ObjectId, ref: "User" }],
   businessEmail: { type: String, required: true },
   businessLocation: { type: String, required: true },

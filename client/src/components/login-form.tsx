@@ -23,17 +23,17 @@ export function LoginForm({
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
   const { data, mutate: logInMutation, status, isPending } = useLogIn();
-  const [id, setId] = useState<string | null>(null);
+  // const [id, setId] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
-  const { data: user } = useQuery({
-    queryKey: ["user", { id }],
-    queryFn: () => getUserById(id!),
-    enabled: !!id,
-    gcTime: 1000 * 60 * 12, // 12 hours
-  });
-  console.log(user);
+  // const { data: user } = useQuery({
+  //   queryKey: ["currentUser"],
+  //   queryFn: () => getUserById(id!),
+  //   enabled: !!id,
+  //   gcTime: 1000 * 60 * 12, // 12 hours
+  // });
+  // console.log(user);
 
   // * Zod schema to validate the inputs
   const formSchema = z.object({
@@ -68,9 +68,9 @@ export function LoginForm({
 
   useEffect(() => {
     if (status === "success") {
-      console.log(data);
-      const id = data?.id || null;
-      setId(id);
+      // console.log(data);
+      // const id = data?.id || null;
+      // setId(id);
       navigate("/");
     }
   }, [status]);

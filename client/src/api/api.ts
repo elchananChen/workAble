@@ -6,8 +6,6 @@ const getAuthTokenFromCookie = () => {
   return tokenCookie ? tokenCookie.split("=")[1] : null;
 };
 
-const token = getAuthTokenFromCookie();
-
 export const api = axios.create({
   baseURL: "http://localhost:3000/api",
   headers: {
@@ -20,7 +18,7 @@ export const apiToken = axios.create({
   baseURL: "http://localhost:3000/api",
   headers: {
     Accept: "application/json",
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${getAuthTokenFromCookie()}`,
   },
   withCredentials: true,
 });

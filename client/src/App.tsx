@@ -12,8 +12,29 @@ import Layout from "./pages/Layout.tsx";
 import AboutUs from "./pages/aboutUs.tsx";
 import UserBusinesses from "./pages/userBusinesses.tsx";
 import AddBusiness from "./pages/addBusiness.tsx";
+// import { useEffect } from "react";
+// import { apiToken } from "./api/api.ts";
 
 function App() {
+  // useEffect(() => {
+  //   //IIFE
+  //   (async () => {
+  //     try {
+
+  //       const dataAuth = await apiToken.post("/user/is_valid")
+
+  //     } catch (error) {
+
+  //     }
+
+  //     // if (dataAuth.userLogout) {
+  //     //   // dispatch(setUser({ role: "guest" }));
+  //     // } else {
+  //     //   // dispatch(setUser(dataAuth));
+  //     // }
+  //   })();
+  // }, []);
+
   const router = createBrowserRouter([
     {
       path: "/",

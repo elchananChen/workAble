@@ -49,18 +49,14 @@ function SignUpForm({
 
   const navigate = useNavigate();
 
-  const {
-    data: user,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["user", { id }],
+  const { data: user } = useQuery({
+    queryKey: ["currentUser"],
     queryFn: () => getUserById(id!),
     enabled: !!id,
     gcTime: 1000 * 60 * 12, // 12 hours
   });
 
-  console.log(user);
+  // console.log(user);
 
   // * Zod schema to validate the inputs
   const formSchema = z.object({
@@ -111,12 +107,9 @@ function SignUpForm({
 
       await signUpMutation(values);
     } catch (err) {
-      // כאן נבדוק אם יש שגיאה מאותו סוג (AxiosError)
       if (err instanceof AxiosError) {
-        // הדפסת הודעת השגיאה
         console.log("AxiosError: ", err.response?.data || err.message);
       } else {
-        // הדפסת כל שגיאה אחרת
         console.log("Unexpected error:", err);
       }
     }
